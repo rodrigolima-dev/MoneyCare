@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {Background, Container, Logo, Input, 
 SendButton, SendText, Link, TextLink} from './styles'
 import { useNavigation } from "@react-navigation/native";
-import { Platform } from "react-native";
+import { Alert, Platform } from "react-native";
+import {AuthContext} from "../../contexts/auth";
 
 
 export default function SignIn () {
     const navigation = useNavigation()
+    const { user } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
 
     return(
         <Background>
