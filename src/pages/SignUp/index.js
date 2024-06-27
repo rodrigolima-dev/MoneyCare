@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {Background, Container, Logo, Input, 
-SendButton, SendText, Link, TextLink} from './styles'
-import { useNavigation } from "@react-navigation/native";
-import { Platform } from "react-native";
+SendButton, SendText, Link, TextLink} from '../SignIn/styles'
 
-
-export default function SignIn () {
-    const navigation = useNavigation()
+export default function SignUp () {
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -16,8 +13,12 @@ export default function SignIn () {
             behavior={Platform.OS ? 'padding' : ''}
             enabled
             >
-                <Logo
-                source={require('../../assets/Logo.png')}
+                <Input
+                placeholder="Name"
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={email}
+                onChangeText={(name) => setName(name)}
                 />
 
                 <Input
@@ -37,12 +38,9 @@ export default function SignIn () {
                 />
 
                 <SendButton>
-                    <SendText>SignIn</SendText>
+                    <SendText>SignUp</SendText>
                 </SendButton>
 
-                <Link onPress={() => navigation.navigate('SignUp')}>
-                    <TextLink>Create an account</TextLink>
-                </Link>
             </Container>
         </Background>
     )

@@ -37,6 +37,7 @@ border-radius: 7px;
 height: 45px;
 justify-content: center;
 align-items: center;
+margin-top: 10px;
 `
 
 export const SendText = styled.Text`
@@ -48,6 +49,7 @@ opacity: .8;
 
 export const Link = styled.TouchableOpacity`
 margin-top: 20px;
+margin-bottom: 9px;
 `
 
 export const TextLink = styled.Text`
