@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {Background, Container, Logo, Input, 
 SendButton, SendText, Link, TextLink} from '../SignIn/styles'
+import { AuthContext } from "../../contexts/auth";
 
 export default function SignUp () {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const { signUp } = useContext(AuthContext)
+
+    function handleSignUp () {
+        signUp(email, password, name)
+    }
     return(
         <Background>
             <Container
@@ -17,7 +23,7 @@ export default function SignUp () {
                 placeholder="Name"
                 autoCorrect={false}
                 autoCapitalize="none"
-                value={email}
+                value={name}
                 onChangeText={(name) => setName(name)}
                 />
 
@@ -37,7 +43,7 @@ export default function SignUp () {
                 onChangeText={(password) => setPassword(password)}
                 />
 
-                <SendButton>
+                <SendButton onPress={handleSignUp}>
                     <SendText>SignUp</SendText>
                 </SendButton>
 
