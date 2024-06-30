@@ -34,8 +34,10 @@ export default function AppRoutes () {
                 return <Ionicons name={iconName} size={size} color={color}/>
             },
             tabBarActiveTintColor: '#007BFF',
-            tabBarInactiveTintColor: 'gray'
+            tabBarInactiveTintColor: 'gray',
+            headerShown: false
         })}
+        
         >
 
             <AppTab.Screen
