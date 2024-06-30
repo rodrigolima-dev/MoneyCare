@@ -17,7 +17,6 @@ export default function Routes() {
                 size="large"
                 color="#131313"
                 />
-
             </View>
         )
     }

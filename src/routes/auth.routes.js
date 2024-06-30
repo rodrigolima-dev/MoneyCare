@@ -20,11 +20,11 @@ export default function AuthRoutes () {
             component={SignUp}
             options={{
                 contentStyle: {
-                    borderTopColor: '#00b94a',
+                    borderTopColor: '#FFF',
                     borderTopWidth: 3,
                 },
                 headerStyle: {
-                    backgroundColor: '#131313'
+                    backgroundColor: '#007BFF'
                 },
                 headerTintColor: '#fff',
                 headerBackTitleVisible: false,
