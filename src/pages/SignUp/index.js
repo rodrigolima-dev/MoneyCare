@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import {Background, Container, Logo, Input, 
-SendButton, SendText, Link, TextLink} from '../SignIn/styles'
+import {Background, Container, Input, 
+SendButton, SendText} from '../SignIn/styles'
 import { AuthContext } from "../../contexts/auth";
 
 export default function SignUp () {

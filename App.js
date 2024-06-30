@@ -4,6 +4,7 @@ import Routes from './src/routes';
 import AuthProvider from './src/contexts/auth';
 
 
+
 export default function BudgetBuddy_() {
     return (
         <NavigationContainer>

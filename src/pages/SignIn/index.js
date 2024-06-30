@@ -8,8 +8,15 @@ import {AuthContext} from "../../contexts/auth";
 
 export default function SignIn () {
     const navigation = useNavigation()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const { signIn } = useContext(AuthContext)
+
+    function handleSignIn() {
+        signIn(email, password)
+    }
 
 
     return(
@@ -38,7 +45,7 @@ export default function SignIn () {
                 onChangeText={(password) => setPassword(password)}
                 />
 
-                <SendButton>
+                <SendButton onPress={handleSignIn}>
                     <SendText>SignIn</SendText>
                 </SendButton>
 
