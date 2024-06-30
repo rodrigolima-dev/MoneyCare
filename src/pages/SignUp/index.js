@@ -22,7 +22,7 @@ export default function SignUp () {
                 <Input
                 placeholder="Name"
                 autoCorrect={false}
-                autoCapitalize="none"
+                autoCapitalize="words"
                 value={name}
                 onChangeText={(name) => setName(name)}
                 />

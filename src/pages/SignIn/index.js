@@ -6,6 +6,7 @@ import { Alert, Platform } from "react-native";
 import {AuthContext} from "../../contexts/auth";
 
 
+
 export default function SignIn () {
     const navigation = useNavigation()
 

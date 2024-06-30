@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "../pages/Home";
-import Registry from '../pages/Registry';
+import New from '../pages/New';
 import Profile from '../pages/Profile';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -21,7 +21,7 @@ export default function AppRoutes () {
                     iconName = focused
                     ? 'home'
                     : 'home-outline'
-                } else if (route.name === 'Registry') {
+                } else if (route.name === 'New') {
                     iconName = focused
                     ? 'duplicate'
                     : 'duplicate-outline'
@@ -32,7 +32,9 @@ export default function AppRoutes () {
                 }
 
                 return <Ionicons name={iconName} size={size} color={color}/>
-            }
+            },
+            tabBarActiveTintColor: '#007BFF',
+            tabBarInactiveTintColor: 'gray'
         })}
         >
 
@@ -42,8 +44,8 @@ export default function AppRoutes () {
             />
 
             <AppTab.Screen
-            name='Registry'
-            component={Registry}
+            name='New'
+            component={New}
             />
 
             <AppTab.Screen
