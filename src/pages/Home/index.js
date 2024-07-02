@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <Background>
       <Container>
-        <Name>Rodrigo Lima</Name>
+        <Name>{user && user.name}</Name>
         <Sale>R$ 300,00</Sale>
       </Container>
 
