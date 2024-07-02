@@ -10,6 +10,7 @@ export const AuthContext = createContext({});
 export default function AuthProvider ({children}) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [loadingAuth, setLoadingAuth] = useState(false)
     const db = getDatabase(app)
     const auth = getAuth();
 
@@ -33,7 +34,8 @@ export default function AuthProvider ({children}) {
 
     //Cadastrar usuário
     async function signUp(email, password, name) {
-        createUserWithEmailAndPassword(auth, email, password)
+        setLoadingAuth(true)
+        await createUserWithEmailAndPassword(auth, email, password)
         .then(async (value) => {
             let uid = value.user.uid;
             const usersRef = ref(db, `users/${uid}`);
@@ -50,18 +52,24 @@ export default function AuthProvider ({children}) {
                 };
                 setUser(data);
                 storageUser(data)
+                setLoadingAuth(false)
             })
+        })
+        .catch((error) => {
+            alert(error.code);
+            setLoadingAuth(false)
         })
     }
 
     //Logar usuário
     async function signIn(email, password) {
-        signInWithEmailAndPassword(auth, email, password)
+        setLoadingAuth(true);
+        await signInWithEmailAndPassword(auth, email, password)
         .then(async(value) => {
             let uid = value.user.uid;
             const usersRef = ref(db, `users/${uid}`);
 
-            onValue(usersRef, (snapshot) => {
+            await onValue(usersRef, (snapshot) => {
                 let data = {
                     uid: uid,
                     name: snapshot.val().name,
@@ -69,12 +77,14 @@ export default function AuthProvider ({children}) {
                 };
                 setUser(data)
                 storageUser(data)
+                setLoadingAuth(false)
             }, {
                 onlyOnce: true
             })
         })
         .catch((error) => {
             Alert.alert(error.code)
+            setLoadingAuth(false)
         })
     }
 
@@ -93,7 +103,7 @@ export default function AuthProvider ({children}) {
     return(
         //!! converte user para boleano.
         <AuthContext.Provider value={{signed: !!user, user, signUp, signIn,
-        loading, SignOut}}>
+        loading, SignOut, loadingAuth}}>
             {children}
         </AuthContext.Provider>
     );

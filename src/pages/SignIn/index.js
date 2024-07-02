@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import {Background, Container, Logo, Input, 
 SendButton, SendText, Link, TextLink} from './styles'
 import { useNavigation } from "@react-navigation/native";
-import { Alert, Platform } from "react-native";
+import { ActivityIndicator, Alert, Platform } from "react-native";
 import {AuthContext} from "../../contexts/auth";
 
 
@@ -13,7 +13,7 @@ export default function SignIn () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const { signIn } = useContext(AuthContext)
+    const { signIn, loadingAuth } = useContext(AuthContext)
 
     function handleSignIn() {
         signIn(email, password)
@@ -44,10 +44,17 @@ export default function SignIn () {
                 autoCapitalize="none"
                 value={password}
                 onChangeText={(password) => setPassword(password)}
+                secureTextEntry={true}
                 />
 
                 <SendButton onPress={handleSignIn}>
-                    <SendText>SignIn</SendText>
+                    {
+                        loadingAuth ? (
+                            <ActivityIndicator size={20} color="#fff"/>
+                        ) : (
+                            <SendText>SignIn</SendText>
+                        )
+                    }
                 </SendButton>
 
                 <Link onPress={() => navigation.navigate('SignUp')}>
