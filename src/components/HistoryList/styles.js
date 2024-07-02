@@ -13,7 +13,7 @@ export const Type = styled.Text`
 
 export const IconView = styled.View`
     flex-direction: row;
-    background-color: ${props => props.type == 'income' ? '#c62c36' : '#28A745'};
+    background-color: ${props => props.type == 'income' ? '#28A745' : '#c62c36'};
     padding: 4px 8px;
     border-radius: 7px;
 `;

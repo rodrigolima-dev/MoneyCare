@@ -41,14 +41,15 @@ export default function Registry() {
   }
 
   async function handleAdd() {
+    //Pegando uid do context.
     let uid = user.uid
-    console.log(uid)
     await push(ref(db,`history/${uid}`), {
       type: type,
       value: parseFloat(value),
       date: format(new Date(), 'dd/MM/yy')
     })
 
+    //Atualizando saldo
     let userRef = ref(db, `users/${uid}`)
     onValue(userRef, (snapshot) => {
       let sale = parseFloat(snapshot.val().sale)

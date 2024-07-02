@@ -1,22 +1,54 @@
 import { View, Text, Button } from 'react-native';
 import { AuthContext } from '../../contexts/auth';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {Background, Container, Name, Sale, Title, List} from './styles'
 import HistoryList from '../../components/HistoryList';
+import app from '../../services/firebaseConnection';
+import { get, getDatabase, limitToLast, onValue, orderByChild, query, ref } from 'firebase/database';
 
 export default function Home() {
+  const [sale, setSale] = useState()
+  const [history, setHistory] = useState([])
+  
+  
   const { user } = useContext(AuthContext)
-  const [history, setHistory] = useState([
-    {key: 1, type: 'income', value: 1800},
-    {key: 2, type: 'expense', value: 100},
-    {key: 3, type: 'income', value: 50},
-  ])
+  const db = getDatabase(app)
+  const uid = user && user.uid
+  
+  useEffect(() => {
+    async function loadList() {
+      await onValue(ref(db, `users/${uid}`),  (snapshot) => {
+        setSale(snapshot.val().sale);
+      });
+    
+
+      let historyRef = ref(db, `history/${uid}`)
+      let historyQuery = query(historyRef, orderByChild('date'), limitToLast(10))
+      
+      await onValue(historyQuery, (snapshot) => {
+        setHistory([])
+        
+        snapshot.forEach((childItem) => {
+          let list = {
+            key: childItem.key,
+            type: childItem.val().type,
+            value: childItem.val().value
+          };
+          setHistory(oldArray => [...oldArray, list].reverse())
+        })
+    });
+  }
+
+
+
+    loadList()
+  },[])
 
   return (
     <Background>
       <Container>
         <Name>{user && user.name}</Name>
-        <Sale>R$ 300,00</Sale>
+        <Sale>R$ {parseFloat(sale).toFixed(2)}</Sale>
       </Container>
 
       <Title>Recent transactions</Title>
