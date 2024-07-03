@@ -25,10 +25,17 @@ export const Sale = styled.Text`
 `;
 
 export const Title = styled.Text`
-    margin-left: 15px;
+    margin-left: 5px;
     color: white;
     margin-bottom: 10px;
 `;
+
+export const Area = styled.View`
+    flex-direction: row;
+    margin-left: 15px;
+    align-items: center;
+    margin-bottom: 10px;
+`
 
 export const List = styled.FlatList`
     padding-top: 15px;
@@ -36,3 +43,4 @@ export const List = styled.FlatList`
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 `
+

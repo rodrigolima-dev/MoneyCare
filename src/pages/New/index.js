@@ -46,7 +46,7 @@ export default function Registry() {
     await push(ref(db,`history/${uid}`), {
       type: type,
       value: parseFloat(value),
-      date: format(new Date(), 'dd/MM/yy')
+      date: format(new Date(), 'dd/MM/yyyy')
     })
 
     //Atualizando saldo

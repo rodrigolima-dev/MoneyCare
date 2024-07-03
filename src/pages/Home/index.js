@@ -1,15 +1,21 @@
 import { AuthContext } from '../../contexts/auth';
 import { useContext, useEffect, useState } from 'react';
-import {Background, Container, Name, Sale, Title, List} from './styles'
+import {Background, Container, Name, Sale, Title, List, Area} from './styles'
 import HistoryList from '../../components/HistoryList';
 import app from '../../services/firebaseConnection';
 import { equalTo, getDatabase, limitToLast, onValue, orderByChild, query, ref, remove, update } from 'firebase/database';
 import { format, isPast } from 'date-fns';
-import { Alert } from 'react-native';
+import { Alert, Platform, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import DatePicker from '../../components/DatePicker';
+
+
 
 export default function Home() {
   const [sale, setSale] = useState()
   const [history, setHistory] = useState([])
+  const [show, setShow] = useState(false)
+  const [newDate, setNewDate] = useState(new Date())
   
   const { user } = useContext(AuthContext)
   const db = getDatabase(app)
@@ -24,7 +30,7 @@ export default function Home() {
       });
     
 
-      let today = format(new Date(), 'dd/MM/yy'); 
+      let today = format(new Date(), 'dd/MM/yyyy'); 
       let historyQuery = query(historyRef, orderByChild('date'),equalTo(today),
       limitToLast(10))
       
@@ -46,7 +52,11 @@ export default function Home() {
 
 
     loadList()
-  },[])
+  },[newDate])
+  /*
+  Useffect está monitorando a newDate, toda vez que ela mudar essa função será
+  executada.
+  */
 
   function handleDelete (data) {
     if(isPast(new Date(data.date))) {
@@ -87,6 +97,20 @@ export default function Home() {
     })
   }
 
+  function handleShowPicker () {
+    setShow(true)
+  }
+
+  function handleClose () {
+
+  }
+
+  function onChange (date) {
+    setShow(Platform.OS === 'ios');
+    setNewDate(date)
+    console.log(newDate)
+  }
+
   return (
     <Background>
       <Container>
@@ -94,7 +118,13 @@ export default function Home() {
         <Sale>R$ {parseFloat(sale).toFixed(2)}</Sale>
       </Container>
 
-      <Title>Recent transactions</Title>
+      <Area>
+        <TouchableOpacity onPress={handleShowPicker}>
+          <Icon name='event' color="#fff" size={26}/>
+        </TouchableOpacity>
+
+          <Title>Recent transactions</Title>
+      </Area>
 
       <List
       showsVerticalScrollIndicator = {false}
@@ -102,6 +132,14 @@ export default function Home() {
       keyExtractor={item => item.key}
       renderItem={({item}) => ( <HistoryList data={item} deleteItem={handleDelete}/>)}
       />
+
+    {show && (
+      <DatePicker
+      onClose={handleClose}
+      date={newDate}
+      onChange={onChange}
+      />
+    )}
     </Background>
     );
 }
