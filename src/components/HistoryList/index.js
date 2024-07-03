@@ -1,23 +1,25 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Container, Type, IconView, TypeText, ValueText} from './styles'
 
-export default function HistoryList({data}) {
+export default function HistoryList({data, deleteItem}) {
  return (
-   <Container>
-    <Type>
-      <IconView type={data.type}>
+    <TouchableWithoutFeedback onLongPress={ () => deleteItem(data)}>
+      <Container>
+        <Type>
+          <IconView type={data.type}>
 
-        <Icon 
-        name={data.type === 'expense' ? 'arrow-down' : 'arrow-up'}
-        color='#fff' 
-        size={20}/>
-        <TypeText>{data.type}</TypeText>
+            <Icon 
+            name={data.type === 'expense' ? 'arrow-down' : 'arrow-up'}
+            color='#fff' 
+            size={20}/>
+            <TypeText>{data.type}</TypeText>
 
-      </IconView>
-    </Type>
+          </IconView>
+        </Type>
 
-    <ValueText>R$ {data.value}</ValueText>
-   </Container>
+        <ValueText>R$ {data.value}</ValueText>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 }

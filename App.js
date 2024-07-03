@@ -6,7 +6,7 @@ import AuthProvider from './src/contexts/auth';
 
 
 
-export default function BudgetBuddy_() {
+export default function MoneyCare() {
     return (
         <NavigationContainer>
             <AuthProvider>
